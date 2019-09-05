@@ -27,7 +27,7 @@
 
 | 메소드 | 경로                        | 설명 | 비고                     |
 | :----- | --------------------------- | ---- | ------------------------ |
-| /GET   | /searches?keyword={keyword} | 검색 | 검색 키워드 DB 저장 필요 |
+| GET   | /searches?keyword={keyword} | 검색 | 검색 키워드 DB 저장 필요 |
 
 ## BOOKMARKS
 

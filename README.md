@@ -1,5 +1,8 @@
 # UniFarm
 
+# ERD
+![유니팜_DB_ERD](https://user-images.githubusercontent.com/23696493/64361863-614a6900-d048-11e9-94ca-f690693cffbb.png)
+
 # API
 
 ## USERS

@@ -1,7 +1,7 @@
-# UniFarm
+# UniFarm Server
 
 # ERD
-![유니팜_DB_ERD](https://user-images.githubusercontent.com/23696493/64361863-614a6900-d048-11e9-94ca-f690693cffbb.png)
+![유니팜_DB_ERD](https://user-images.githubusercontent.com/23696493/64362100-dc138400-d048-11e9-9d00-7b9ef1f98f8f.png)
 
 # API
 

@@ -15,4 +15,5 @@ public class Keyword{
 
     @Column(name="info", nullable = false)
     private String info;
+
 }

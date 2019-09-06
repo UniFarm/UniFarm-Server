@@ -14,4 +14,5 @@ public class KeywordProgram {
 
     private int keywordIdx;
     private int programIdx;
+
 }

@@ -124,7 +124,7 @@ public class ProgramService {
 
             data.setKeywords(keywords);
 
-            programRepository.save();
+//            programRepository.save();
 
             return DefaultRes.res(StatusCode.OK, "조회 성공", data);
 
@@ -187,15 +187,15 @@ public class ProgramService {
      * @param
      * @return
      */
-    public DefaultRes findPopular(){
-        try{
-
-        } catch (Exception e)
-        {
-            log.info(e.getMessage());
-            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
-        }
-    }
+//    public DefaultRes findPopular(){
+//        try{
+//
+//        } catch (Exception e)
+//        {
+//            log.info(e.getMessage());
+//            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
+//        }
+//    }
 
     /**
      *  프로그램 신청

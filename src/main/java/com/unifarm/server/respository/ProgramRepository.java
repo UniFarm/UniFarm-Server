@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface ProgramRepository extends JpaRepository<Program, Integer> {
 
     Optional<Program> findByProgramIdx(int programIdx);
-
 }

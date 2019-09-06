@@ -3,6 +3,7 @@ package com.unifarm.server.api;
 import com.unifarm.server.domain.User;
 import com.unifarm.server.model.DefaultRes;
 import com.unifarm.server.model.LoginReq;
+import com.unifarm.server.model.SignUpReq;
 import com.unifarm.server.service.UserService;
 import com.unifarm.server.utils.auth.Auth;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<DefaultRes> login(@RequestBody final LoginReq loginReq) {
         try {
@@ -53,17 +55,18 @@ public class UserController {
         }
     }
 
+    // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<DefaultRes> signUp(@RequestBody final User user) {
+    public ResponseEntity<DefaultRes> signUp(@RequestBody final SignUpReq signUpReq) {
         try {
-            return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
+            return new ResponseEntity<>(userService.saveUser(signUpReq), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/users/email/check")
+    @GetMapping("/check")
     public ResponseEntity<DefaultRes> checkEmail(@RequestParam("email") final String email) {
         try {
             return new ResponseEntity<>(userService.validateEmail(email), HttpStatus.OK);

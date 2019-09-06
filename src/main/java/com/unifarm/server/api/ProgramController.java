@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
 
 @Slf4j
 @RestController
@@ -101,18 +99,18 @@ public class ProgramController {
         }
     }
 
-    // 실시간 인기 조회 (7일 기준)
-//    @GetMapping("/popular")
-//    public ResponseEntity<DefaultRes> findPopular()
-//    {
-//        try{
-//            return new ResponseEntity<>(programService.findPopular(), HttpStatus.OK);
-//        } catch (Exception e)
-//        {
-//            log.error(e.getMessage());
-//            return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+//     실시간 인기 조회
+    @GetMapping("/popular")
+    public ResponseEntity<DefaultRes> findPopular()
+    {
+        try{
+            return new ResponseEntity<>(programService.findPopular(), HttpStatus.OK);
+        } catch (Exception e)
+        {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //프로그램 신청
     @PostMapping("")

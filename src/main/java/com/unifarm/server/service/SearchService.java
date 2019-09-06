@@ -55,11 +55,11 @@ public class SearchService {
 
     /**
      * userIdx로 회원 조회
-     * @param programId
+     * @param programIdx
      * @return
      */
 
-    /*
+
     public List<Keyword> findKeywordsByProgramId(final int programIdx) {
         Optional<Program> program = programRepository.findByProgramIdx(programIdx);
         Optional<List<KeywordProgram>> keywordProgram = keywordProgramRepository.findByProgramIdx(programIdx);
@@ -70,7 +70,7 @@ public class SearchService {
             Optional<Keyword> keyword = keywordRepository.findByKeywordIdx(keywordIdx);
             keywords.add(keyword.get());
         }
+        if(keywords.isEmpty()) return null;
+        else return keywords;
     }
-    */
-
 }

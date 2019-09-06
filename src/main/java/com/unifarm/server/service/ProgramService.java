@@ -2,10 +2,7 @@ package com.unifarm.server.service;
 
 import com.unifarm.server.domain.*;
 import com.unifarm.server.model.DefaultRes;
-import com.unifarm.server.model.Program.Date;
-import com.unifarm.server.model.Program.JoinProgramReq;
-import com.unifarm.server.model.Program.JoinProgramRes;
-import com.unifarm.server.model.Program.ProgramRes;
+import com.unifarm.server.model.Program.*;
 import com.unifarm.server.respository.*;
 import com.unifarm.server.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +14,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 @Slf4j
 @Service
@@ -124,7 +122,7 @@ public class ProgramService {
 
             data.setKeywords(keywords);
 
-//            programRepository.save();
+            programRepository.updateViewCount(programIdx);
 
             return DefaultRes.res(StatusCode.OK, "조회 성공", data);
 
@@ -187,15 +185,27 @@ public class ProgramService {
      * @param
      * @return
      */
-//    public DefaultRes findPopular(){
-//        try{
-//
-//        } catch (Exception e)
-//        {
-//            log.info(e.getMessage());
-//            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
-//        }
-//    }
+    public DefaultRes findPopular(){
+        try{
+            Sort sort = new Sort(Sort.Direction.ASC, "viewCount");
+            List<Program> programs = programRepository.findAll(sort);
+            List<PopularRes> data = new ArrayList<>();
+
+            for(int i = 0; i < programs.size(); i++)
+            {
+                PopularRes tmpt = new PopularRes();
+                tmpt.setThumbnail(programs.get(i).getThumbnail());
+                tmpt.setTitle(programs.get(i).getTitle());
+
+                data.add(tmpt);
+            }
+            return DefaultRes.res(StatusCode.OK, "조회 성공", data);
+        } catch (Exception e)
+        {
+            log.info(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
+        }
+    }
 
     /**
      *  프로그램 신청

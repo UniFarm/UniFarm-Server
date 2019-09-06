@@ -82,6 +82,38 @@ public class ProgramController {
         }
     }
 
+    //관심 키워드 기준 프로그램 조회
+    @GetMapping("/keyword")
+    public ResponseEntity<DefaultRes> findByKeword(@RequestHeader(value = "Authorization") final String header)
+    {
+        try{
+            int userIdx = userService.authorization(header);
+
+            if(userIdx == -1) return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.FORBIDDEN);
+            else
+            {
+                return new ResponseEntity<>(programService.findByMajor(userIdx), HttpStatus.OK);
+            }
+        } catch (Exception e)
+        {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 실시간 인기 조회 (7일 기준)
+    @GetMapping("/popular")
+    public ResponseEntity<DefaultRes> findPopular()
+    {
+        try{
+            return new ResponseEntity<>(programService.findPopular(), HttpStatus.OK);
+        } catch (Exception e)
+        {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //프로그램 신청
     @PostMapping("")
     public ResponseEntity<DefaultRes> joinProgram(@RequestHeader(value = "Authorization") final String header,

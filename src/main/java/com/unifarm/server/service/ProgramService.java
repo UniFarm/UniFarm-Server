@@ -124,6 +124,8 @@ public class ProgramService {
 
             data.setKeywords(keywords);
 
+            programRepository.save();
+
             return DefaultRes.res(StatusCode.OK, "조회 성공", data);
 
         } catch (Exception e)
@@ -163,8 +165,6 @@ public class ProgramService {
                     keywords2.add(keyword.get());
                 }
 
-
-                log.info("고비 ");
                 ProgramRes data = new ProgramRes();
                 data.setProgram(program.get());
                 data.setProgramDates(programDate.get());
@@ -174,12 +174,26 @@ public class ProgramService {
 
             }
 
-            log.info("끝");
             return DefaultRes.res(StatusCode.OK, "조회 성공", datas);
         } catch (Exception e)
         {
             log.info(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, "맞춤 정보 없음");
+        }
+    }
+
+    /**
+     * 실시간 인기 프로그램 조회
+     * @param
+     * @return
+     */
+    public DefaultRes findPopular(){
+        try{
+
+        } catch (Exception e)
+        {
+            log.info(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
         }
     }
 

@@ -12,12 +12,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userIdx;
-    private String userId;
     private String password;
     private String email;
     private String name;
     private String entranceYear;
     private String major;
     private String gender;
-    private String photoUrl;
 }

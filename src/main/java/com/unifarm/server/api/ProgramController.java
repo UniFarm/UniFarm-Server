@@ -90,7 +90,7 @@ public class ProgramController {
             if(userIdx == -1) return new ResponseEntity<>(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.FORBIDDEN);
             else
             {
-                return new ResponseEntity<>(programService.findByMajor(userIdx), HttpStatus.OK);
+                return new ResponseEntity<>(programService.findByKeyword(userIdx), HttpStatus.OK);
             }
         } catch (Exception e)
         {

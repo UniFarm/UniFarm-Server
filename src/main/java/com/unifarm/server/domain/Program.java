@@ -35,6 +35,6 @@ public class Program {
 
     private String ask;
     private String reward;
-
+    private String subTitle;
 
 }

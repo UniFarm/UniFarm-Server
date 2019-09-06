@@ -11,6 +11,7 @@ import com.unifarm.server.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,18 +55,21 @@ public class SearchService {
 
     /**
      * userIdx로 회원 조회
-     * @param keyword
+     * @param programId
      * @return
      */
 
     /*
-
-    public Program findKeywordsByProgramId(final int programId) {
-        Optional<List<KeywordProgram>> keywordPrograms = keywordProgramRepository.findByProgramIdx(programId);
-        return keywords.map(value ->
-                programRepository.findByProgramIdx(
-                        keywordProgramRepository.findByKeywordIdx(value.iterator().next().getKeywordIdx()).map(v->v.getProgramIdx()).get()).get())
-                .orElseGet(null);
+    public List<Keyword> findKeywordsByProgramId(final int programIdx) {
+        Optional<Program> program = programRepository.findByProgramIdx(programIdx);
+        Optional<List<KeywordProgram>> keywordProgram = keywordProgramRepository.findByProgramIdx(programIdx);
+        List<Keyword> keywords = new ArrayList<>();
+        for(int i = 0; i < keywordProgram.get().size(); i++)
+        {
+            int keywordIdx = keywordProgram.get().get(i).getKeywordIdx();
+            Optional<Keyword> keyword = keywordRepository.findByKeywordIdx(keywordIdx);
+            keywords.add(keyword.get());
+        }
     }
     */
 

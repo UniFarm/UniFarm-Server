@@ -21,14 +21,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final S3FileUploadService s3FileUploadService;
 
     private final JwtService jwtService;
 
-    public UserService(final UserRepository userRepository, final S3FileUploadService s3FileUploadService,
+    public UserService(final UserRepository userRepository,
                        final JwtService jwtService) {
         this.userRepository = userRepository;
-        this.s3FileUploadService = s3FileUploadService;
         this.jwtService = jwtService;
     }
 
@@ -55,7 +53,7 @@ public class UserService {
         final int userIdx = jwtService.decode(jwt).getUser_idx();
         if(userIdx == -1) return -1;
 
-        final Optional<User> user = userRepository.findById(userIdx);
+        final Optional<User> user = userRepository.findByUserIdx(userIdx);
         if(!user.isPresent()) return -1;
 
         return userIdx;

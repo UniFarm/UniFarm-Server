@@ -14,5 +14,6 @@ public class ResponseMessage {
     public static final String DELETE_USER = "회원 탈퇴 성공";
 
     public static final String UNQUALIFIED = "자격 없음";
+    public static final String NOT_FOUND = "조회 실패";
 
 }

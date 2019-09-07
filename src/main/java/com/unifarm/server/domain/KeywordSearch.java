@@ -15,4 +15,5 @@ public class KeywordSearch {
 
     private int keywordIdx;
     private int searchedCount;
+
 }

@@ -31,8 +31,8 @@ public class SearchService {
                          final ProgramRepository programRepository,
                          final KeywordSearchRepository keywordSearchRepository,
                          final KeywordProgramRepository keywordProgramRepository,
-                        final ProgramService programService,
-                       final JwtService jwtService) {
+                         final ProgramService programService,
+                         final JwtService jwtService) {
         this.userRepository = userRepository;
         this.keywordRepository = keywordRepository;
         this.keywordUserRepository = keywordUserRepository;
@@ -45,6 +45,7 @@ public class SearchService {
 
     /**
      * 프로그램 조회
+     *
      * @param keyword
      * @return
      */

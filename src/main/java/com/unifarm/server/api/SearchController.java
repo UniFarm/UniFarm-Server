@@ -43,6 +43,4 @@ public class SearchController {
             return new ResponseEntity<>(DefaultRes.res(StatusCode.NOT_FOUND, "검색 실패"), HttpStatus.NOT_FOUND);
         }
     }
-
-
 }

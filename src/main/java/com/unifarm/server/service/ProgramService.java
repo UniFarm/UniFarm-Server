@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 @Service
 public class ProgramService {
 
+    private final KeywordUserRepository keywordUserRepository;
     private final UserRepository userRepository;
     private final KeywordRepository keywordRepository;
     private final ProgramRepository programRepository;
@@ -29,6 +30,7 @@ public class ProgramService {
     private final JwtService jwtService;
 
     public ProgramService(final ProgramRepository programRepository,
+                          final KeywordUserRepository keywordUserRepository,
                           final JwtService jwtService,
                           final UserRepository userRepository,
                           final KeywordRepository keywordRepository,
@@ -39,6 +41,7 @@ public class ProgramService {
         this.programRepository = programRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.keywordUserRepository = keywordUserRepository;
         this.keywordRepository = keywordRepository;
         this.keywordProgramRepository = keywordProgramRepository;
         this.programUserRepository = programUserRepository;
@@ -145,18 +148,17 @@ public class ProgramService {
             Optional<List<Keyword>> keywords = keywordRepository.findByInfo(user.get().getMajor());
             List<ProgramRes> datas = new ArrayList<>();
 
-            for(int i = 0; i < keywords.get().size(); i++)
-            {
-                Optional<KeywordProgram> keywordProgram = keywordProgramRepository.findByKeywordIdx(keywords.get().get(i).getKeywordIdx());
-                Optional<Program> program = programRepository.findByProgramIdx(keywordProgram.get().getProgramIdx());
+            Optional<List<KeywordProgram>> keywordProgram = keywordProgramRepository.findByKeywordIdx(keywords.get().get(0).getKeywordIdx());
+
+            for(int i = 0; i < keywordProgram.get().size(); i++) {
+                Optional<Program> program = programRepository.findByProgramIdx(keywordProgram.get().get(i).getProgramIdx());
 
 
                 Optional<List<ProgramDate>> programDate = programDateRepository.findByProgramIdx(program.get().getProgramIdx());
                 Optional<List<KeywordProgram>> keywordPrograms = keywordProgramRepository.findByProgramIdx(program.get().getProgramIdx());
                 List<Keyword> keywords2 = new ArrayList<>();
 
-                for(int j = 0; j < keywordPrograms.get().size(); j++)
-                {
+                for (int j = 0; j < keywordPrograms.get().size(); j++) {
                     int keywordIdx = keywordPrograms.get().get(j).getKeywordIdx();
                     Optional<Keyword> keyword = keywordRepository.findByKeywordIdx(keywordIdx);
 
@@ -169,7 +171,6 @@ public class ProgramService {
                 data.setKeywords(keywords2);
 
                 datas.add(data);
-
             }
 
             return DefaultRes.res(StatusCode.OK, "조회 성공", datas);
@@ -177,6 +178,53 @@ public class ProgramService {
         {
             log.info(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, "맞춤 정보 없음");
+        }
+    }
+
+    /**
+     * 관심 키워드 기준 프로그램 조회
+     * @param userIdx
+     * @param
+     */
+    public DefaultRes findByKeyword(final int userIdx)
+    {
+        try{
+            Optional<User> user = userRepository.findByUserIdx(userIdx);
+            Optional<List<KeywordUser>> keywordUsers = keywordUserRepository.findByUserIdx(user.get().getUserIdx());
+            List<ProgramRes> datas = new ArrayList<>();
+
+            if(!keywordUsers.get().isEmpty()) {
+                for (int i = 0; i < keywordUsers.get().size(); i++) {
+                    Keyword keyword = keywordRepository.findByKeywordIdx(keywordUsers.get().get(i).getKeywordIdx()).get();
+                    if(keywordProgramRepository.countByKeywordIdx(keyword.getKeywordIdx()) > 0) {
+                        KeywordProgram programKeyword = keywordProgramRepository.findByKeywordIdx(keyword.getKeywordIdx()).get().get(0);
+                        Program program = programRepository.findByProgramIdx(programKeyword.getProgramIdx()).get();
+                        List<Keyword> keywords = new ArrayList<>();
+                        Optional<List<ProgramDate>> programDate = programDateRepository.findByProgramIdx(programKeyword.getProgramIdx());
+                        Optional<List<KeywordProgram>> keywordPrograms = keywordProgramRepository.findByProgramIdx(programKeyword.getProgramIdx());
+
+                        for (int j = 0; j < keywordPrograms.get().size(); j++) {
+                            int keywordIdx = keywordPrograms.get().get(j).getKeywordIdx();
+                            Optional<Keyword> keyword2 = keywordRepository.findByKeywordIdx(keywordIdx);
+
+                            keywords.add(keyword2.get());
+                        }
+
+                        ProgramRes data = new ProgramRes();
+                        data.setProgram(program);
+                        data.setProgramDates(programDate.get());
+                        data.setKeywords(keywords);
+
+                        datas.add(data);
+                    }
+                }
+            }
+
+            return DefaultRes.res(StatusCode.OK, "조회 성공", datas);
+        } catch (Exception e)
+        {
+            log.info(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, "데이터베이스 에러");
         }
     }
 

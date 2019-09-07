@@ -15,7 +15,9 @@ public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
 
 
     Optional<Keyword> findByKeywordIdx(int keywordIdx);
-    Optional<List<Keyword>> findByInfo(final String keyword);
-    Optional<List<Keyword>> findByInfoContaining(final String keyword);
 
+    Optional<List<Keyword>> findByInfo(final String keyword);
+
+    Optional<List<Keyword>> findAllByInfoContaining(final String keyword);
 }
+

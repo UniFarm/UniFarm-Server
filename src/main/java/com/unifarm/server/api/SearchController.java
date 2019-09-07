@@ -4,6 +4,7 @@ import com.unifarm.server.model.DefaultRes;
 import com.unifarm.server.model.SearchProgramRes;
 import com.unifarm.server.service.SearchService;
 import com.unifarm.server.service.UserService;
+import com.unifarm.server.utils.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,20 +33,14 @@ public class SearchController {
     }
 
     // 프로그램 검색
+
     @GetMapping("")
     public ResponseEntity<DefaultRes> searchProgram(@RequestParam("keyword") final String keyword) {
         try {
-            System.out.println("keyword : " + keyword);
-            SearchProgramRes searchProgramRes = new SearchProgramRes();
-            if(searchService.findPrograms(keyword)!= null){
-                searchProgramRes.setProgram(searchService.findPrograms(keyword));
-            }
-
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, "검색 성공", searchService.findPrograms(keyword)), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new ResponseEntity<>(FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(DefaultRes.res(StatusCode.NOT_FOUND, "검색 실패"), HttpStatus.NOT_FOUND);
         }
     }
-
 }

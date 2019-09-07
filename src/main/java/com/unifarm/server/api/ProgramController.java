@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @Slf4j
 @RestController
 @RequestMapping("programs")
@@ -46,6 +45,7 @@ public class ProgramController {
         }
     }
 
+
     //프로그램 상세 조회
     @GetMapping("/{programIdx}")
     public ResponseEntity<DefaultRes> findProgram(@PathVariable("programIdx") final int programIdx)
@@ -62,6 +62,7 @@ public class ProgramController {
     }
 
     //전공 기준 프로그램 조회
+    @Auth
     @GetMapping("/major")
     public ResponseEntity<DefaultRes> findByMajor(@RequestHeader(value = "Authorization") final String header)
     {
@@ -81,6 +82,7 @@ public class ProgramController {
     }
 
     //관심 키워드 기준 프로그램 조회
+    @Auth
     @GetMapping("/keyword")
     public ResponseEntity<DefaultRes> findByKeword(@RequestHeader(value = "Authorization") final String header)
     {
@@ -99,7 +101,7 @@ public class ProgramController {
         }
     }
 
-//     실시간 인기 조회
+    //     실시간 인기 조회
     @GetMapping("/popular")
     public ResponseEntity<DefaultRes> findPopular()
     {
@@ -113,6 +115,7 @@ public class ProgramController {
     }
 
     //프로그램 신청
+    @Auth
     @PostMapping("")
     public ResponseEntity<DefaultRes> joinProgram(@RequestHeader(value = "Authorization") final String header,
                                                   @RequestBody final JoinProgramReq date)

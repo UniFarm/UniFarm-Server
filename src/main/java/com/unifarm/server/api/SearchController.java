@@ -37,22 +37,12 @@ public class SearchController {
     @GetMapping("")
     public ResponseEntity<DefaultRes> searchProgram(@RequestParam("keyword") final String keyword) {
         try {
-            System.out.println("keyword : " + keyword);
-            SearchProgramRes searchProgramRes = new SearchProgramRes();
-            if(searchService.findPrograms(keyword)!= null &&
-                    searchService.findKeywordsByProgramId(searchService.findPrograms(keyword).getProgramIdx()) != null){
-                searchProgramRes.setProgram(searchService.findPrograms(keyword));
-                searchProgramRes.setKeywordProgram(searchService.findKeywordsByProgramId(searchProgramRes.getProgram().getProgramIdx()));
-                return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, "검색 성공", searchProgramRes), HttpStatus.OK);
-            }
-            else{
-                return new ResponseEntity<>(DefaultRes.res(StatusCode.NOT_FOUND, "검색 실패"), HttpStatus.NOT_FOUND);
-            }
-
+            return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, "검색 성공", searchService.findPrograms(keyword)), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(DefaultRes.res(StatusCode.NOT_FOUND, "검색 실패"), HttpStatus.NOT_FOUND);
         }
     }
+
 
 }

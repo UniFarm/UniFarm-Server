@@ -4,6 +4,7 @@ import com.unifarm.server.domain.User;
 import com.unifarm.server.model.DefaultRes;
 import com.unifarm.server.model.LoginReq;
 import com.unifarm.server.model.SignUpReq;
+import com.unifarm.server.service.ProgramService;
 import com.unifarm.server.service.UserService;
 import com.unifarm.server.utils.auth.Auth;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,12 @@ import static com.unifarm.server.model.DefaultRes.FAIL_DEFAULT_RES;
 public class UserController {
 
     private final UserService userService;
+    private final ProgramService programService;
 
-    public UserController(final UserService userService) {
+    public UserController(final UserService userService,
+                          final ProgramService programService) {
         this.userService = userService;
+        this.programService = programService;
     }
 
     // 로그인

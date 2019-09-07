@@ -10,5 +10,5 @@ import java.util.List;
 @Data
 public class SearchProgramRes {
     private Program program;
-    private List<Keyword> keywordProgram;
+    private List<Keyword> keywordPrograms;
 }

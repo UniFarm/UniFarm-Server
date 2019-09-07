@@ -275,6 +275,7 @@ public class ProgramService {
 
             log.info(join.toString());
             programUserRepository.save(join);
+            programRepository.updateRegiNumber(date.getProgramIdx());
             log.info(join.toString());
             return DefaultRes.res(StatusCode.OK, "신청 완료");
         } catch (Exception e)

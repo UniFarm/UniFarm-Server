@@ -148,32 +148,30 @@ public class ProgramService {
             Optional<List<Keyword>> keywords = keywordRepository.findByInfo(user.get().getMajor());
             List<ProgramRes> datas = new ArrayList<>();
 
-            for(int i = 0; i < keywords.get().size(); i++)
-            {
-                Optional<KeywordProgram> keywordProgram = keywordProgramRepository.findByKeywordIdx(keywords.get().get(i).getKeywordIdx());
-                Optional<Program> program = programRepository.findByProgramIdx(keywordProgram.get().getProgramIdx());
+                Optional<List<KeywordProgram>> keywordProgram = keywordProgramRepository.findByKeywordIdx(keywords.get().get(0).getKeywordIdx());
+
+                for(int i = 0; i < keywordProgram.get().size(); i++) {
+                    Optional<Program> program = programRepository.findByProgramIdx(keywordProgram.get().get(i).getProgramIdx());
 
 
-                Optional<List<ProgramDate>> programDate = programDateRepository.findByProgramIdx(program.get().getProgramIdx());
-                Optional<List<KeywordProgram>> keywordPrograms = keywordProgramRepository.findByProgramIdx(program.get().getProgramIdx());
-                List<Keyword> keywords2 = new ArrayList<>();
+                    Optional<List<ProgramDate>> programDate = programDateRepository.findByProgramIdx(program.get().getProgramIdx());
+                    Optional<List<KeywordProgram>> keywordPrograms = keywordProgramRepository.findByProgramIdx(program.get().getProgramIdx());
+                    List<Keyword> keywords2 = new ArrayList<>();
 
-                for(int j = 0; j < keywordPrograms.get().size(); j++)
-                {
-                    int keywordIdx = keywordPrograms.get().get(j).getKeywordIdx();
-                    Optional<Keyword> keyword = keywordRepository.findByKeywordIdx(keywordIdx);
+                    for (int j = 0; j < keywordPrograms.get().size(); j++) {
+                        int keywordIdx = keywordPrograms.get().get(j).getKeywordIdx();
+                        Optional<Keyword> keyword = keywordRepository.findByKeywordIdx(keywordIdx);
 
-                    keywords2.add(keyword.get());
+                        keywords2.add(keyword.get());
+                    }
+
+                    ProgramRes data = new ProgramRes();
+                    data.setProgram(program.get());
+                    data.setProgramDates(programDate.get());
+                    data.setKeywords(keywords2);
+
+                    datas.add(data);
                 }
-
-                ProgramRes data = new ProgramRes();
-                data.setProgram(program.get());
-                data.setProgramDates(programDate.get());
-                data.setKeywords(keywords2);
-
-                datas.add(data);
-
-            }
 
             return DefaultRes.res(StatusCode.OK, "조회 성공", datas);
         } catch (Exception e)
@@ -199,7 +197,7 @@ public class ProgramService {
                 for (int i = 0; i < keywordUsers.get().size(); i++) {
                     Keyword keyword = keywordRepository.findByKeywordIdx(keywordUsers.get().get(i).getKeywordIdx()).get();
                     if(keywordProgramRepository.countByKeywordIdx(keyword.getKeywordIdx()) > 0) {
-                        KeywordProgram programKeyword = keywordProgramRepository.findByKeywordIdx(keyword.getKeywordIdx()).get();
+                        KeywordProgram programKeyword = keywordProgramRepository.findByKeywordIdx(keyword.getKeywordIdx()).get().get(0);
                         Program program = programRepository.findByProgramIdx(programKeyword.getProgramIdx()).get();
                         List<Keyword> keywords = new ArrayList<>();
                         Optional<List<ProgramDate>> programDate = programDateRepository.findByProgramIdx(programKeyword.getProgramIdx());

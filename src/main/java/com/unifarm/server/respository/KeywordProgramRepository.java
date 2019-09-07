@@ -12,7 +12,7 @@ public interface KeywordProgramRepository extends JpaRepository<KeywordProgram, 
 
 
     Optional<List<KeywordProgram>> findByProgramIdx(int programIdx);
-    Optional<KeywordProgram> findByKeywordIdx(final int keywordIdx);
-
+    Optional<List<KeywordProgram>> findByKeywordIdx(final int keywordIdx);
+    List<Optional<KeywordProgram>> findAllByKeywordIdx(final int keywordIdx);
     int countByKeywordIdx(final int keywordIdx);
 }

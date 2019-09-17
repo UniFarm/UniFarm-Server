@@ -1,4 +1,4 @@
-# UniFarm Server
+# UniFarm Project Server Repository
 
 # ABOUT Unifarm
 

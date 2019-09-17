@@ -7,6 +7,9 @@
 ### 참여한 팀원
 PM : 김혜지 / Android 개발 : 김무현 양승희 / 서버 개발 : 박영우 성누리
 
+### 서비스 개괄
+![유니팜_개괄](https://user-images.githubusercontent.com/23696493/65023932-d5510f00-d96e-11e9-8e9f-4f4acdd414cd.jpg)
+
 # ERD
 ![unifarm_20190906_58_56](https://user-images.githubusercontent.com/23696493/64415351-1116e980-d0d0-11e9-9f39-dca52f02f7e0.png)
 
